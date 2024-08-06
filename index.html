@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tetris</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="canvas-div">
+      <canvas id="canvas" width="320" height="640"></canvas>
+    </div>
+
+    <div class="result-div">
+      <div class="canvas2-div">
+        <h3>Next</h3>
+        <canvas id="canvas2" width="163" height="110"></canvas>
+      </div>
+
+      <div class="level-div">
+        <h3>Level</h3>
+        <h1 id="level">1</h1>
+      </div>
+
+      <div class="score-div">
+        <h3>Score</h3>
+        <h1 id="score">0</h1>
+      </div>
+    </div>
+
+    <div id="cap-div" class="hidden">
+      <h1 id="cap">PAUSED</h1>
+      <h2 id="final-score"></h2>
+    </div>
+  </div>
+
+
+
+  <script src="./scripts/tetris.js"></script>
+</body>
+
+</html>
