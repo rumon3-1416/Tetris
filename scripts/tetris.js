@@ -296,6 +296,7 @@ const processor = () => {
     resetData();
 
     handleStopRows();
+    ram();
   } else {
     cBrick = childBrick;
     drawBrick();
