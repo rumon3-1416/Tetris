@@ -26,7 +26,7 @@ const colorLn = 'blueviolet';
 
 // Generate Random Block Id
 const randomBlockId = () => {
-  let blockId = (Math.random() * 6).toFixed();
+  let blockId = Number((Math.random() * 6).toFixed());
 
   return blockId;
 };
@@ -115,6 +115,50 @@ document.addEventListener('keydown', k => {
 
   canProcess = false;
 });
+
+let startX = 0;
+let startY = 0;
+let movedX = 0;
+let movedY = 0;
+// Touch Listener
+canvas.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+});
+canvas.addEventListener('touchmove', e => {
+  movedX = e.touches[0].clientX;
+  movedY = e.touches[0].clientY;
+});
+
+document.addEventListener('touchend', () => {
+  const diffX = Math.abs(movedX - startX);
+  const diffY = Math.abs(movedY - startY);
+
+  if (
+    play &&
+    canProcess &&
+    movedX !== 0 &&
+    movedY !== 0 &&
+    (diffX > 5 || diffY > 5)
+  ) {
+    if (diffX > diffY) {
+      startX > movedX
+        ? ((cDir = left), ram())
+        : movedX > startX && ((cDir = right), ram());
+    } else if (diffY > diffX) {
+      startY > movedY
+        ? ((cDir = up), handleUpDir())
+        : movedY > startY && ((cDir = down), ram());
+    }
+  } else {
+    gameOver ? window.location.reload() : ((play = !play), handleCap());
+  }
+});
+
+// Click Listener
+// document.addEventListener('click', () => {
+//   gameOver ? window.location.reload() : ((play = !play), handleCap());
+// });
 
 // Bricks Interval
 let fallInterval = setInterval(() => {
@@ -214,6 +258,7 @@ const block = () => {
     a == 'c' && (xyPN('n', 'e'), xyPN('p', 'e'), xyPN('p', 'p')),
     a == 'd' && (xyPN('e', 'n'), xyPN('e', 'p'), xyPN('p', 'n')));
 };
+
 // Count Brick Squares Position
 const xyPN = (xpn, ypn) => {
   let x = bpX;
@@ -245,6 +290,7 @@ const xyPN = (xpn, ypn) => {
 
   childBrick.length == 4 && checkCond();
 };
+
 // Check Brick Conditions
 const checkCond = () => {
   childBrick.map(cb => {
@@ -253,6 +299,7 @@ const checkCond = () => {
     x < 16 && (touchedLeft = true);
     x > 304 && (touchedRight = true);
     y > 624 && (touchedBottom = true);
+
     stops.map(stp => {
       stp.map(st => {
         cb.x == st.x && cb.y == st.y && (touchedStops = true);
@@ -316,6 +363,7 @@ const revertAng = () => {
       ((bId == 1 || bId == 3 || bId == 4) && (bAng = 'b'),
       (bId == 2 || bId == 5 || bId == 6) && (bAng = 'd'));
 };
+
 // Revert Position
 const revertPos = () => {
   moved == 'left' && (bpX = bpX + bDis);
@@ -338,6 +386,7 @@ const drawBrick = () => {
     drawSq(cb.x, cb.y, cb.cl);
   });
 };
+
 // Draw Block Squares
 const drawSq = (x, y, color) => {
   c.beginPath();
