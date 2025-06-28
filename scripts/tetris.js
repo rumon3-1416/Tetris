@@ -1,3 +1,5 @@
+const body = document.getElementById('body');
+const container = document.getElementById('container');
 const canvas = document.querySelector('#canvas');
 const canvas2 = document.querySelector('#canvas2');
 const level = document.querySelector('#level');
@@ -92,6 +94,23 @@ let stops = [
   [],
   [],
 ];
+
+// Fit canvas to Screen
+window.addEventListener('resize', () => {
+  fitToScreen();
+});
+
+const fitToScreen = () => {
+  const widthRatio = window.innerWidth / 640;
+  const heightRatio = window.innerHeight / 740;
+
+  if (widthRatio < heightRatio) {
+    container.style.transform = `scale(${widthRatio})`;
+  } else {
+    container.style.transform = `scale(${heightRatio})`;
+  }
+};
+fitToScreen();
 
 // Key Down Listener
 document.addEventListener('keydown', k => {
@@ -399,6 +418,10 @@ const drawSq = (x, y, color) => {
   c.lineTo(x - hl2, y + hl);
   c.lineTo(x - hl2, y - hl);
   c.lineTo(x - hl, y - hl2);
+  // c.shadowColor = color;
+  // c.shadowOffsetX = 5;
+  // c.shadowOffsetY = 5;
+  // c.shadowBlur = 30;
   c.fillStyle = color;
   c.fill();
 };
